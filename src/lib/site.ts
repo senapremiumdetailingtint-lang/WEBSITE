@@ -10,15 +10,20 @@ export const site = {
   region: 'TX',
   regionName: 'Texas',
   zip: '75078',
-  url: 'https://senadetailing.vercel.app',
+  url: 'https://senadetailing.com',
   phoneDisplay: '(214) 656-0656',
   phoneHref: '+12146560656',
   whatsapp: '12146560656', // international, no + or spaces
   instagram: 'senadetailingtint',
   instagramUrl: 'https://instagram.com/senadetailingtint',
-  email: 'hello@senapremiumdetailing.com', // placeholder — owner confirms
+  email: 'senapremiumdetailingtint@gmail.com', // where booking requests are sent
   priceRange: '$$',
 } as const;
+
+// Web3Forms access key (public, safe in the client) — delivers the booking
+// form to the owner's email. Get a free key at https://web3forms.com using
+// senapremiumdetailingtint@gmail.com, then paste it here.
+export const web3formsKey = '590d7740-9b71-4c12-88c9-6d8659e2fedd';
 
 // Cities served — also generate /[city] SEO pages from this list.
 export const serviceAreas = [

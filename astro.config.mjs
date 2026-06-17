@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 // persist on Vercel — bookings are delivered via WhatsApp (and email if a
 // Resend key is set). For a persistent DB + /admin history, host on a Node server.
 export default defineConfig({
-  site: 'https://senadetailing.vercel.app',
+  site: 'https://senadetailing.com',
   output: 'server',
   adapter: vercel(),
   vite: {

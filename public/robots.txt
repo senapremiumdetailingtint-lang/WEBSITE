@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://senadetailing.vercel.app/sitemap.xml
+Sitemap: https://senadetailing.com/sitemap.xml
