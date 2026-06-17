@@ -1,12 +1,12 @@
 ---
 import Icon from './Icon.astro';
 import BrazilFlag from './BrazilFlag.astro';
-import { site, serviceAreas, areaLabel } from '../lib/site';
+import { site, serviceAreas, areaLabel, servicePages } from '../lib/site';
 const year = new Date().getFullYear();
 ---
 <footer class="border-t border-white/10 bg-surface">
   <div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
-    <div class="grid gap-10 md:grid-cols-3">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
       <div>
         <img src="/sena-logo.png" alt={site.name} width="912" height="160" class="h-9 w-auto" />
         <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted">
@@ -19,6 +19,15 @@ const year = new Date().getFullYear();
         <p class="mt-4 flex items-center gap-2 text-sm text-muted">
           <BrazilFlag size={18} /> Brazilian-owned · Falamos Português
         </p>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Services</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          {servicePages.map((s) => (
+            <li><a href={`/services/${s.slug}`} class="text-muted transition-colors hover:text-ink">{s.name}</a></li>
+          ))}
+        </ul>
       </div>
 
       <div>

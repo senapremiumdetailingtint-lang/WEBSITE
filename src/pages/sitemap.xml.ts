@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { site, serviceAreas } from '../lib/site';
+import { site, serviceAreas, servicePages } from '../lib/site';
 
 export const prerender = true;
 
@@ -7,6 +7,7 @@ export const GET: APIRoute = () => {
   const lastmod = new Date().toISOString().split('T')[0];
   const entries = [
     { path: '/', priority: '1.0' },
+    ...servicePages.map((s) => ({ path: `/services/${s.slug}`, priority: '0.9' })),
     ...serviceAreas.map((a) => ({ path: `/${a.slug}`, priority: '0.9' })),
     { path: '/privacy', priority: '0.3' },
   ];
