@@ -1,0 +1,35 @@
+---
+// Replace these with your friend's REAL before/after photos when available.
+const shots = [
+  { src: '/images/detail-hand.jpg', alt: 'Detailer hand-polishing a glossy black luxury car', span: 'md:col-span-2 md:row-span-2' },
+  { src: '/images/interior.jpg', alt: 'Freshly detailed luxury car interior with black leather seats', span: '' },
+  { src: '/images/paint.jpg', alt: 'Close-up of glossy car paint with water beading after ceramic coating', span: '' },
+  { src: '/images/tint.jpg', alt: 'Luxury SUV with professional window tint', span: 'md:col-span-2' },
+];
+---
+<section id="gallery" class="scroll-mt-24 border-t border-white/10 bg-surface py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-6 md:px-10">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">The Results</p>
+      <h2 class="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight">
+        Work That <span class="text-gold-gradient">Speaks for Itself</span>
+      </h2>
+    </div>
+
+    <div class="reveal mt-10 grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4">
+      {shots.map((s) => (
+        <figure class={`group overflow-hidden rounded-2xl border border-white/10 ${s.span}`}>
+          <img
+            src={s.src}
+            alt={s.alt}
+            class="h-full w-full object-cover transition-[filter] duration-500 group-hover:brightness-110"
+            width="1024"
+            height="1024"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

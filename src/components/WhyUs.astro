@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+
+const reasons = [
+  {
+    icon: 'car',
+    title: 'Detail + Tint in One Visit',
+    body: 'Full detailing AND window tint — at your door, in one appointment.',
+  },
+  {
+    icon: 'sun',
+    title: 'Built for Texas Heat',
+    body: 'Ceramic coatings & tint that protect against sun and fade.',
+  },
+  {
+    icon: 'mapPin',
+    title: 'Your Prosper Neighbors',
+    body: 'Locally based. A real person answers — not an app.',
+  },
+  {
+    icon: 'shield',
+    title: 'Insured & Guaranteed',
+    body: "Licensed & insured. Not happy? We come back free.",
+  },
+];
+---
+<section id="why" class="scroll-mt-24 py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-6 md:px-10">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Why Sena</p>
+      <h2 class="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight">
+        Premium Care, <span class="text-gold-gradient">Zero Hassle</span>
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {reasons.map((r) => (
+        <div class="reveal flex gap-5 rounded-2xl border border-white/10 bg-surface p-7 transition-colors duration-300 hover:border-[var(--color-gold)]/30">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gold-gradient text-bg">
+            <Icon name={r.icon} size={24} />
+          </span>
+          <div>
+            <h3 class="font-display text-xl font-semibold">{r.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{r.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

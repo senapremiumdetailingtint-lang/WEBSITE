@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import { site, serviceAreas, areaLabel } from '../lib/site';
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-white/10 bg-surface">
+  <div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
+    <div class="grid gap-10 md:grid-cols-3">
+      <div>
+        <img src="/sena-logo.png" alt={site.name} width="912" height="160" class="h-9 w-auto" />
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted">
+          Premium mobile car detailing & window tint. We come to you across the
+          Dallas–Fort Worth metroplex.
+        </p>
+        <a href={site.instagramUrl} target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-gold">
+          <Icon name="instagram" size={18} /> @{site.instagram}
+        </a>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Service Areas</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          {serviceAreas.map((a) => (
+            <li><a href={`/${a.slug}`} class="text-muted transition-colors hover:text-ink">Mobile Detailing in {a.name}, {a.region}</a></li>
+          ))}
+          <li class="text-muted">Prosper, TX & surrounding DFW</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Get In Touch</h3>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li><a href={`tel:${site.phoneHref}`} class="flex items-center gap-2.5 text-ink transition-colors hover:text-gold"><Icon name="phone" size={18} class="text-gold" />{site.phoneDisplay}</a></li>
+          <li class="flex items-center gap-2.5 text-muted"><Icon name="mapPin" size={18} class="text-gold" />{site.city}, {site.region}</li>
+          <li class="flex items-start gap-2.5 text-muted"><Icon name="clock" size={18} class="mt-0.5 text-gold" /><span>Mon–Sat · 8:00 AM – 7:00 PM</span></li>
+        </ul>
+        <a href="/#booking" class="mt-5 inline-flex items-center gap-2 rounded-full bg-gold-gradient px-5 py-2.5 text-sm font-semibold text-bg transition-transform hover:brightness-110">
+          Book Your Detail <Icon name="arrowRight" size={16} />
+        </a>
+      </div>
+    </div>
+
+    <div class="gold-rule my-10"></div>
+
+    <div class="flex flex-col items-center justify-between gap-4 text-xs text-muted md:flex-row">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p class="text-center md:text-right">Serving {areaLabel}</p>
+    </div>
+  </div>
+</footer>

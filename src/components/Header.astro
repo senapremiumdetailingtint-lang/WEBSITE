@@ -1,0 +1,83 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../lib/site';
+
+const links = [
+  { href: '/#services', label: 'Services' },
+  { href: '/#tint', label: 'Window Tint' },
+  { href: '/#process', label: 'How It Works' },
+  { href: '/#gallery', label: 'Gallery' },
+  { href: '/#reviews', label: 'Reviews' },
+];
+---
+<header class="fixed inset-x-0 top-0 z-10">
+  <div class="mx-auto mt-3 flex max-w-7xl items-center justify-between gap-4 rounded-full border border-[var(--color-gold)]/15 bg-bg/80 px-5 py-3 backdrop-blur-md md:mt-4 md:px-7" style="margin-left:max(0.75rem,calc((100%-80rem)/2));margin-right:max(0.75rem,calc((100%-80rem)/2));">
+    <a href="/" class="flex items-center" aria-label={`${site.name} — home`}>
+      <img src="/sena-logo.png" alt={site.name} width="912" height="160" class="h-8 w-auto md:h-9" />
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href} class="text-sm font-medium text-muted transition-colors duration-200 hover:text-ink">{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={`tel:${site.phoneHref}`} class="hidden items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-gold md:flex">
+        <Icon name="phone" size={16} class="text-gold" />
+        {site.phoneDisplay}
+      </a>
+      <a href="/#booking" class="rounded-full bg-gold-gradient px-5 py-2.5 text-sm font-semibold text-bg transition-transform duration-200 hover:brightness-110">Book Now</a>
+      <button id="navToggle" type="button" class="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-ink lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <Icon name="menu" size={20} />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden px-3 lg:hidden">
+    <nav class="mx-auto mt-2 max-w-7xl rounded-2xl border border-[var(--color-gold)]/15 bg-surface/95 p-4 backdrop-blur-md" aria-label="Mobile">
+      <ul class="flex flex-col">
+        {links.map((l) => (
+          <li><a href={l.href} class="block rounded-lg px-3 py-3 text-base font-medium text-ink transition-colors hover:bg-white/5" data-close>{l.label}</a></li>
+        ))}
+        <li class="mt-2"><a href={`tel:${site.phoneHref}`} class="flex items-center gap-2 px-3 py-3 font-semibold text-gold"><Icon name="phone" size={18} />{site.phoneDisplay}</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('mobileMenu');
+
+  const close = () => {
+    menu?.classList.add('hidden');
+    toggle?.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  menu?.querySelectorAll('[data-close]').forEach((a) =>
+    a.addEventListener('click', close)
+  );
+
+  // Close on Escape or click outside.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+  document.addEventListener('click', (e) => {
+    if (
+      menu &&
+      !menu.classList.contains('hidden') &&
+      !menu.contains(e.target as Node) &&
+      !toggle?.contains(e.target as Node)
+    ) {
+      close();
+    }
+  });
+</script>

@@ -1,0 +1,150 @@
+---
+import Icon from './Icon.astro';
+import { site, serviceOptions, waDefault } from '../lib/site';
+
+const inputCls =
+  'w-full rounded-xl border border-white/10 bg-surface-2 px-4 py-3 text-ink placeholder:text-muted/70 transition-colors focus:border-gold';
+const labelCls = 'mb-1.5 block text-sm font-medium text-ink';
+---
+<section id="booking" class="scroll-mt-24 py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-6 md:px-10">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
+      <!-- Left: pitch + WhatsApp -->
+      <div class="reveal">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Book Your Detail</p>
+        <h2 class="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight">
+          Ready When <span class="text-gold-gradient">You Are</span>
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-muted">
+          Tell us about your vehicle — we'll confirm fast. Prefer to chat? WhatsApp us.
+        </p>
+
+        <div class="mt-8 space-y-4">
+          <a href={waDefault} target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-4 transition-colors hover:border-[#25D366]/50">
+            <span class="grid h-11 w-11 place-items-center rounded-full bg-[#25D366] text-white"><Icon name="whatsapp" size={22} /></span>
+            <span>
+              <span class="block text-sm font-semibold text-ink">Message us on WhatsApp</span>
+              <span class="block text-sm text-muted">Fastest way to book — instant reply</span>
+            </span>
+          </a>
+          <a href={`tel:${site.phoneHref}`} class="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-4 transition-colors hover:border-[var(--color-gold)]/40">
+            <span class="grid h-11 w-11 place-items-center rounded-full bg-gold-gradient text-bg"><Icon name="phone" size={22} /></span>
+            <span>
+              <span class="block text-sm font-semibold text-ink">Call or text {site.phoneDisplay}</span>
+              <span class="block text-sm text-muted">Mon–Sat · 8:00 AM – 7:00 PM</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="reveal rounded-2xl border border-white/10 bg-surface p-6 md:p-8">
+        <form id="bookingForm" method="POST" action="/api/book" class="grid gap-5 sm:grid-cols-2">
+          <!-- Honeypot (hidden from humans) -->
+          <div class="hidden" aria-hidden="true">
+            <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="sm:col-span-1">
+            <label class={labelCls} for="name">Full name *</label>
+            <input class={inputCls} id="name" name="name" type="text" required autocomplete="name" placeholder="Jordan Smith" />
+          </div>
+          <div class="sm:col-span-1">
+            <label class={labelCls} for="phone">Phone *</label>
+            <input class={inputCls} id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="(214) 555-0199" />
+          </div>
+
+          <div class="sm:col-span-1">
+            <label class={labelCls} for="email">Email</label>
+            <input class={inputCls} id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" />
+          </div>
+          <div class="sm:col-span-1">
+            <label class={labelCls} for="vehicle">Vehicle (year / make / model)</label>
+            <input class={inputCls} id="vehicle" name="vehicle" type="text" placeholder="2022 Tahoe" />
+          </div>
+
+          <div class="sm:col-span-1">
+            <label class={labelCls} for="service">Service</label>
+            <select class={inputCls} id="service" name="service">
+              {serviceOptions.map((o) => <option value={o}>{o}</option>)}
+            </select>
+          </div>
+          <div class="sm:col-span-1">
+            <label class={labelCls} for="preferred">Preferred date & time</label>
+            <input class={inputCls} id="preferred" name="preferred" type="text" placeholder="Sat morning, 06/21" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class={labelCls} for="address">Service address (where we come to you)</label>
+            <input class={inputCls} id="address" name="address" type="text" autocomplete="street-address" placeholder="123 Main St, Prosper, TX" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class={labelCls} for="notes">Anything else?</label>
+            <textarea class={inputCls} id="notes" name="notes" rows="3" placeholder="Pet hair, heavy stains, add window tint, etc."></textarea>
+          </div>
+
+          <!-- TCPA consent -->
+          <div class="sm:col-span-2">
+            <label for="consent" class="flex cursor-pointer items-start gap-3 text-sm text-muted">
+              <input type="checkbox" id="consent" name="consent" required class="mt-1 h-5 w-5 shrink-0 cursor-pointer accent-[var(--color-gold)]" />
+              <span>
+                I agree to be contacted by Sena Premium Detailing & Tint by phone, text,
+                or WhatsApp about my request. Message/data rates may apply. Consent is
+                not a condition of purchase. See our
+                <a href="/privacy" class="text-gold underline">Privacy Policy</a>.
+              </span>
+            </label>
+          </div>
+
+          <div class="sm:col-span-2">
+            <button type="submit" id="bookSubmit" class="flex w-full items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform duration-200 hover:brightness-110 disabled:opacity-60">
+              <Icon name="calendar" size={20} /> Request My Appointment
+            </button>
+            <p id="formError" class="mt-3 hidden text-sm text-red-400" role="alert"></p>
+            <p class="mt-3 text-center text-xs text-muted">No payment now — pay after your service is done.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Progressive enhancement: validate + submit via fetch for inline errors.
+  // Falls back to a normal POST if JS is disabled.
+  const form = document.getElementById('bookingForm') as HTMLFormElement | null;
+  const errEl = document.getElementById('formError');
+  const btn = document.getElementById('bookSubmit') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    errEl?.classList.add('hidden');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+    }
+    try {
+      const res = await fetch('/api/book', { method: 'POST', body: new FormData(form) });
+      if (res.redirected) {
+        window.location.href = res.url;
+        return;
+      }
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data?.errors?.length ? 'Please check the highlighted fields.' : 'Something went wrong.');
+    } catch (err) {
+      if (errEl) {
+        errEl.textContent = (err as Error).message + ' You can also reach us on WhatsApp.';
+        errEl.classList.remove('hidden');
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Request My Appointment';
+      }
+    }
+  });
+</script>

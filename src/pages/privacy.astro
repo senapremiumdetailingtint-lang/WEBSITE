@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/site';
+export const prerender = true;
+const updated = '06/17/2026';
+---
+<Layout title="Privacy Policy | Sena Premium Detailing & Tint" description="Privacy policy for Sena Premium Detailing & Tint." path="/privacy">
+  <section class="mx-auto max-w-3xl px-6 pt-36 pb-24 md:px-10">
+    <h1 class="font-display text-4xl font-bold">Privacy Policy</h1>
+    <p class="mt-2 text-sm text-muted">Last updated: {updated}</p>
+
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-ink [&_a]:text-gold [&_a]:underline">
+      <p>
+        {site.name} ("we", "us") respects your privacy. This policy explains what
+        information we collect and how we use it.
+      </p>
+
+      <h2>Information We Collect</h2>
+      <p>
+        When you submit a booking or contact request, we collect the information
+        you provide: your name, phone number, email, vehicle details, service
+        address, and any notes. We do not collect payment information through this
+        website.
+      </p>
+
+      <h2>How We Use Your Information</h2>
+      <p>
+        We use your information solely to respond to your request, schedule and
+        provide services, and communicate with you about your appointment. We do
+        not sell your personal information.
+      </p>
+
+      <h2>Communications Consent (TCPA)</h2>
+      <p>
+        By submitting our form and checking the consent box, you agree to be
+        contacted by phone, text message (SMS), or WhatsApp regarding your
+        request. Message and data rates may apply. Consent is not a condition of
+        purchase. You may opt out at any time by replying STOP to any text or by
+        asking us to stop contacting you.
+      </p>
+
+      <h2>Data Retention</h2>
+      <p>
+        We keep your request information only as long as needed to serve you and
+        for reasonable business records.
+      </p>
+
+      <h2>Your Choices</h2>
+      <p>
+        You may request that we update or delete your information at any time by
+        contacting us at {site.phoneDisplay}.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy? Call or text us at
+        <a href={`tel:${site.phoneHref}`}>{site.phoneDisplay}</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

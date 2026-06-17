@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Services from '../components/Services.astro';
+import Tint from '../components/Tint.astro';
+import Process from '../components/Process.astro';
+import Gallery from '../components/Gallery.astro';
+import WhyUs from '../components/WhyUs.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Reviews from '../components/Reviews.astro';
+import Booking from '../components/Booking.astro';
+
+export const prerender = true;
+---
+<Layout
+  title="Mobile Car Detailing & Window Tint — DFW, TX | Sena Premium"
+  description="Premium mobile car detailing & window tint across DFW. We come to you in Frisco, Plano, McKinney & Dallas. From $89. Licensed & insured."
+  path="/"
+>
+  <Hero />
+  <TrustStrip />
+  <Services />
+  <Tint />
+  <Process />
+  <Gallery />
+  <WhyUs />
+  <CtaBanner />
+  <Reviews />
+  <Booking />
+</Layout>

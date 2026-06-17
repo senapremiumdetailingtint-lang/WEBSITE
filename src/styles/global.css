@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600&family=Sora:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+/* ---- Design tokens (MASTER.md) ---- */
+@theme {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1c1c1c;
+  /* Calibrated to the SENA logo's champagne-gold metallic tones */
+  --color-gold: #d8bd74;
+  --color-gold-light: #f6e6ad;
+  --color-gold-deep: #8f7647;
+  --color-ink: #f5f5f5;
+  --color-muted: #a3a3a3;
+
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Sora', system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+  --font-accent: 'Playfair Display', Georgia, serif;
+  --gold-gradient: linear-gradient(
+    135deg,
+    #8f7647 0%,
+    #c9a85f 30%,
+    #f6e6ad 50%,
+    #c9a85f 70%,
+    #8f7647 100%
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #0a0a0a;
+}
+
+/* Gold gradient text for display accents */
+.text-gold-gradient {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* subtle luxe glow */
+  filter: drop-shadow(0 0 18px rgba(216, 189, 116, 0.16));
+}
+
+/* Title mixing: the gold highlight phrase inside a heading switches to an
+   elegant serif italic, contrasting with the clean Sora base of the title. */
+:is(h1, h2, h3) .text-gold-gradient {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  /* serif italic reads slightly smaller — nudge up to match the sans cap height */
+  font-size: 1.08em;
+  line-height: 1;
+}
+
+/* Gold gradient fill (CTAs, accents) */
+.bg-gold-gradient {
+  background: var(--gold-gradient);
+}
+
+/* Thin gold divider */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(216, 189, 116, 0.6),
+    transparent
+  );
+}
+
+/* Focus ring — accessible gold */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

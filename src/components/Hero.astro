@@ -1,0 +1,59 @@
+---
+import Icon from './Icon.astro';
+import { site, areaLabel } from '../lib/site';
+---
+<section class="relative isolate flex min-h-[100svh] items-center overflow-hidden">
+  <!-- Background image with dark fallback gradient -->
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_70%_20%,#1c1c1c_0%,#0a0a0a_60%)]">
+    <img
+      src="/images/hero.jpg"
+      alt="Freshly detailed glossy black luxury car with water beading and golden light"
+      class="h-full w-full object-cover opacity-60"
+      width="1600"
+      height="894"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-bg/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/40"></div>
+  </div>
+
+  <div class="mx-auto w-full max-w-7xl px-6 pt-28 pb-16 md:px-10">
+    <div class="max-w-2xl">
+      <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-gold">
+        <Icon name="mapPin" size={16} /> Mobile Detailing & Window Tint · DFW, {site.region}
+      </p>
+
+      <h1 class="mt-5 font-display text-[clamp(2.5rem,6.5vw,5rem)] font-bold leading-[1.04]">
+        Mobile Car Detailing<br />That Makes Your Car<br /><span class="text-gold-gradient">Showroom New</span>
+      </h1>
+
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-muted">
+        Detailing & window tint, brought to your driveway. You don't lift a finger.
+      </p>
+
+      <!-- Offer pill -->
+      <div class="mt-7 inline-flex items-center gap-3 rounded-full border border-[var(--color-gold)]/30 bg-surface/70 px-5 py-2.5 backdrop-blur-sm">
+        <Icon name="sparkles" size={18} class="text-gold" />
+        <span class="text-sm md:text-base">
+          <span class="font-semibold text-ink">Basic Detail</span>
+          <span class="text-muted"> from </span>
+          <span class="font-display text-xl font-bold text-gold-gradient">$89</span>
+        </span>
+      </div>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/#booking" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform duration-200 hover:brightness-110">
+          <Icon name="calendar" size={20} /> Book Your Detail
+        </a>
+        <a href={`tel:${site.phoneHref}`} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors duration-200 hover:border-gold hover:text-gold">
+          <Icon name="phone" size={20} /> {site.phoneDisplay}
+        </a>
+      </div>
+
+      <p class="mt-8 text-sm text-muted">
+        Serving {areaLabel}
+      </p>
+    </div>
+  </div>
+</section>

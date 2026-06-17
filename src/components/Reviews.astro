@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+
+// IMPORTANT: These are PLACEHOLDER sample testimonials for layout only.
+// Replace with your friend's REAL Google reviews before going live.
+// Publishing fabricated reviews as genuine violates FTC rules.
+const reviews = [
+  {
+    name: 'Sample Review',
+    location: 'Frisco, TX',
+    text: 'They came right to my driveway and made my SUV look brand new. Booked it in the morning, done by the afternoon. Incredible service.',
+  },
+  {
+    name: 'Sample Review',
+    location: 'Prosper, TX',
+    text: 'Got the detail and ceramic tint done in one visit. The cabin stays so much cooler now and the paint looks unreal. Worth every penny.',
+  },
+  {
+    name: 'Sample Review',
+    location: 'McKinney, TX',
+    text: 'Professional, on time, and the attention to detail is next level. My go-to from now on. Highly recommend to anyone in the area.',
+  },
+];
+---
+<section id="reviews" class="scroll-mt-24 border-t border-white/10 bg-surface py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-6 md:px-10">
+    <div class="reveal flex flex-col items-center text-center">
+      <div class="flex gap-1 text-gold">
+        {Array.from({ length: 5 }).map(() => <Icon name="star" size={22} />)}
+      </div>
+      <h2 class="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight">
+        Trusted Across <span class="text-gold-gradient">North Dallas</span>
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {reviews.map((r) => (
+        <figure class="reveal flex flex-col rounded-2xl border border-white/10 bg-surface-2 p-7">
+          <div class="flex gap-1 text-gold">
+            {Array.from({ length: 5 }).map(() => <Icon name="star" size={16} />)}
+          </div>
+          <blockquote class="mt-4 flex-1 text-sm leading-relaxed text-ink">“{r.text}”</blockquote>
+          <figcaption class="mt-5 text-sm">
+            <span class="font-semibold text-ink">{r.name}</span>
+            <span class="text-muted"> · {r.location}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

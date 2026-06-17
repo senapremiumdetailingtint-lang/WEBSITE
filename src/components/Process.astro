@@ -1,0 +1,63 @@
+---
+import Icon from './Icon.astro';
+
+const steps = [
+  {
+    icon: 'calendar',
+    title: 'Book in 60 Seconds',
+    body: 'Pick a package online or text us on WhatsApp.',
+  },
+  {
+    icon: 'car',
+    title: 'We Come to You',
+    body: 'Our mobile unit arrives — no water or power hookup needed.',
+  },
+  {
+    icon: 'sparkles',
+    title: 'Drive Away Like New',
+    body: 'Relax. Get back a flawless car — guaranteed.',
+  },
+];
+---
+<section id="process" class="scroll-mt-24 py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-6 md:px-10">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">How It Works</p>
+      <h2 class="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight">
+        Your Driveway Is <span class="text-gold-gradient">Our Shop</span>
+      </h2>
+      <p class="mt-4 text-lg leading-relaxed text-muted">
+        One visit. Zero errands. We handle everything so you don't have to.
+      </p>
+    </div>
+
+    <div class="mt-14 grid items-center gap-10 lg:grid-cols-2">
+      <div class="reveal overflow-hidden rounded-2xl border border-white/10">
+        <img
+          src="/images/lifestyle.jpg"
+          alt="Sena detailer servicing a luxury SUV in the driveway of a home"
+          class="aspect-[4/3] w-full object-cover"
+          width="1376"
+          height="1032"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <ol class="space-y-6">
+        {steps.map((s, i) => (
+          <li class="reveal flex items-start gap-5" style={`transition-delay:${i * 90}ms`}>
+            <div class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-[var(--color-gold)]/30 bg-surface text-gold">
+              <Icon name={s.icon} size={26} />
+            </div>
+            <div>
+              <span class="font-display text-xs font-semibold tracking-widest text-gold">STEP {i + 1}</span>
+              <h3 class="mt-1 font-display text-xl font-semibold">{s.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted">{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

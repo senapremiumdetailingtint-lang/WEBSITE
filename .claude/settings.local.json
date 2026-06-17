@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"C:/Users/kevin/Desktop/AGENCIA/VENDA SITES/sena detailing\" 2>/dev/null; echo \"---PARENT---\"; ls -la \"C:/Users/kevin/Desktop/AGENCIA/VENDA SITES\")"
+    ]
+  }
+}

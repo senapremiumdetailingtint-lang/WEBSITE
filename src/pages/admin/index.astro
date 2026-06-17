@@ -1,0 +1,120 @@
+---
+import { getBookings, updateBookingStatus } from '../../lib/db';
+import { site } from '../../lib/site';
+
+export const prerender = false;
+
+// --- Simple HTTP Basic Auth gate (password = ADMIN_PASSWORD env) ---
+const expected = import.meta.env.ADMIN_PASSWORD || 'change-me';
+const auth = Astro.request.headers.get('authorization') || '';
+let authorized = false;
+if (auth.startsWith('Basic ')) {
+  try {
+    const decoded = atob(auth.slice(6));
+    const pass = decoded.split(':').slice(1).join(':');
+    authorized = pass === expected;
+  } catch {
+    authorized = false;
+  }
+}
+if (!authorized) {
+  return new Response('Authentication required', {
+    status: 401,
+    headers: { 'WWW-Authenticate': 'Basic realm="Sena Admin"' },
+  });
+}
+
+// --- Handle status updates ---
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const id = Number(form.get('id'));
+  const status = String(form.get('status') || '');
+  if (id && status) {
+    updateBookingStatus(id, status);
+    return Astro.redirect('/admin', 303);
+  }
+}
+
+const bookings = getBookings();
+const statusColors: Record<string, string> = {
+  new: 'bg-gold-gradient text-bg',
+  contacted: 'bg-blue-500/20 text-blue-300',
+  booked: 'bg-green-500/20 text-green-300',
+  done: 'bg-white/10 text-muted',
+};
+function waHref(phone: string) {
+  const digits = phone.replace(/\D/g, '');
+  const intl = digits.length === 10 ? `1${digits}` : digits;
+  return `https://wa.me/${intl}`;
+}
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bookings — Sena Admin</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { background:#0a0a0a; color:#f5f5f5; font-family: system-ui, sans-serif; margin:0; }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+      h1 { font-size: 1.6rem; margin:0; }
+      .sub { color:#a3a3a3; font-size:.9rem; margin-top:4px; }
+      .card { border:1px solid rgba(216,189,116,.18); background:#141414; border-radius:14px; padding:18px; margin-top:16px; }
+      .row { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+      .meta { color:#a3a3a3; font-size:.85rem; }
+      .name { font-weight:600; font-size:1.05rem; }
+      .tag { display:inline-block; padding:3px 10px; border-radius:999px; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
+      .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:10px 24px; margin-top:14px; font-size:.9rem; }
+      .grid b { color:#d8bd74; font-weight:600; display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px; }
+      a { color:#d8bd74; }
+      .actions { margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+      select, button { font: inherit; padding:7px 12px; border-radius:8px; border:1px solid rgba(255,255,255,.12); background:#1c1c1c; color:#f5f5f5; cursor:pointer; }
+      button.go { background:#d8bd74; color:#0a0a0a; border:none; font-weight:600; }
+      .empty { color:#a3a3a3; text-align:center; padding:60px 0; }
+      .bg-gold-gradient { background: linear-gradient(135deg,#8f7647,#d8bd74,#f6e6ad); }
+      .text-bg { color:#0a0a0a; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Bookings</h1>
+      <p class="sub">{site.name} · {bookings.length} total request{bookings.length === 1 ? '' : 's'}</p>
+
+      {bookings.length === 0 && <p class="empty">No booking requests yet.</p>}
+
+      {bookings.map((b) => (
+        <div class="card">
+          <div class="row">
+            <div>
+              <span class="name">{b.name}</span>
+              <div class="meta">{new Date(b.created_at).toLocaleString('en-US')}</div>
+            </div>
+            <span class={`tag ${statusColors[b.status] ?? 'bg-white/10'}`}>{b.status}</span>
+          </div>
+
+          <div class="grid">
+            <div><b>Phone</b><a href={`tel:${b.phone}`}>{b.phone}</a> · <a href={waHref(b.phone)} target="_blank" rel="noopener">WhatsApp</a></div>
+            {b.email && <div><b>Email</b><a href={`mailto:${b.email}`}>{b.email}</a></div>}
+            {b.vehicle && <div><b>Vehicle</b>{b.vehicle}</div>}
+            {b.service && <div><b>Service</b>{b.service}</div>}
+            {b.preferred && <div><b>Preferred</b>{b.preferred}</div>}
+            {b.address && <div><b>Address</b>{b.address}</div>}
+            <div><b>Consent</b>{b.consent ? 'Yes' : 'No'}</div>
+          </div>
+          {b.notes && <p style="margin-top:12px;font-size:.9rem;"><b style="color:#d8bd74;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;">Notes</b><br />{b.notes}</p>}
+
+          <form method="POST" class="actions">
+            <input type="hidden" name="id" value={b.id} />
+            <select name="status">
+              {['new', 'contacted', 'booked', 'done'].map((s) => (
+                <option value={s} selected={s === b.status}>{s}</option>
+              ))}
+            </select>
+            <button class="go" type="submit">Update</button>
+          </form>
+        </div>
+      ))}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { site, waDefault } from '../lib/site';
+
+export const prerender = true;
+---
+<Layout title="Thank You | Sena Premium Detailing & Tint" description="Your booking request has been received." path="/thank-you" noindex={true}>
+  <section class="flex min-h-[80svh] items-center">
+    <div class="mx-auto max-w-2xl px-6 py-28 text-center">
+      <span class="mx-auto grid h-20 w-20 place-items-center rounded-full bg-gold-gradient text-bg">
+        <Icon name="check" size={40} />
+      </span>
+      <h1 class="mt-8 font-display text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-tight">
+        Request <span class="text-gold-gradient">Received</span>
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-muted">
+        Thank you! We've got your request and will reach out shortly to confirm
+        your appointment. Need it sooner? Message us on WhatsApp or give us a call.
+      </p>
+      <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={waDefault} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 font-semibold text-white transition-transform hover:brightness-110">
+          <Icon name="whatsapp" size={20} /> WhatsApp Us
+        </a>
+        <a href={`tel:${site.phoneHref}`} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 font-semibold text-ink transition-colors hover:border-gold hover:text-gold">
+          <Icon name="phone" size={20} /> {site.phoneDisplay}
+        </a>
+      </div>
+      <a href="/" class="mt-8 inline-block text-sm text-muted underline transition-colors hover:text-gold">← Back to home</a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import Services from '../components/Services.astro';
+import Tint from '../components/Tint.astro';
+import Process from '../components/Process.astro';
+import Reviews from '../components/Reviews.astro';
+import Booking from '../components/Booking.astro';
+import { serviceAreas, site, waDefault } from '../lib/site';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return serviceAreas.map((a) => ({ params: { city: a.slug } }));
+}
+
+const { city } = Astro.params;
+const area = serviceAreas.find((a) => a.slug === city);
+if (!area) return Astro.redirect('/404');
+
+const cityName = area.name;
+---
+<Layout
+  title={`Mobile Car Detailing & Window Tint in ${cityName}, ${area.region} | Sena Premium`}
+  description={`Premium mobile car detailing and window tint in ${cityName}, ${area.region}. We come to you — detail from $89, ceramic tint, paint correction. Licensed & insured. Book today.`}
+  cityName={cityName}
+  path={`/${area.slug}`}
+>
+  <!-- Localized hero -->
+  <section class="relative isolate flex min-h-[80svh] items-center overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_70%_20%,#1c1c1c_0%,#0a0a0a_60%)]">
+      <img src="/images/hero.jpg" alt={`Mobile car detailing in ${cityName}, ${area.region}`} class="h-full w-full object-cover opacity-50" width="1600" height="894" fetchpriority="high" decoding="async" />
+      <div class="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-bg/20"></div>
+    </div>
+    <div class="mx-auto w-full max-w-7xl px-6 pt-28 pb-16 md:px-10">
+      <div class="max-w-2xl">
+        <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-gold">
+          <Icon name="mapPin" size={16} /> Serving {cityName}, {area.region}
+        </p>
+        <h1 class="mt-5 font-display text-[clamp(2.5rem,6vw,4.75rem)] font-bold leading-[1.04]">
+          Mobile Car Detailing in <span class="text-gold-gradient">{cityName}</span>
+        </h1>
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-muted">
+          Detailing & window tint at your door in {cityName}. From $89.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="#booking" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
+            <Icon name="calendar" size={20} /> Book in {cityName}
+          </a>
+          <a href={waDefault} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors hover:border-gold hover:text-gold">
+            <Icon name="whatsapp" size={20} /> WhatsApp Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local intro copy for SEO -->
+  <section class="border-y border-white/10 bg-surface py-16 md:py-20">
+    <div class="mx-auto max-w-3xl px-6 text-center md:px-10">
+      <h2 class="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight">
+        {cityName}'s Trusted Mobile Detailing & Tint
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-muted">
+        From busy professionals to luxury SUV and truck owners, drivers across
+        {cityName} trust Sena Premium for spotless, protected vehicles without the
+        hassle of a shop visit. Based right here in Prosper, we're your neighbors —
+        fully licensed, insured, and backed by a 100% satisfaction guarantee.
+        Call or text <a href={`tel:${site.phoneHref}`} class="text-gold underline">{site.phoneDisplay}</a> to get started.
+      </p>
+    </div>
+  </section>
+
+  <Services />
+  <Tint />
+  <Process />
+  <Reviews />
+  <Booking />
+</Layout>

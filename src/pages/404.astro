@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+export const prerender = true;
+---
+<Layout title="Page Not Found | Sena Premium Detailing & Tint" description="The page you're looking for doesn't exist." path="/404">
+  <section class="flex min-h-[80svh] items-center">
+    <div class="mx-auto max-w-xl px-6 py-28 text-center">
+      <p class="font-display text-7xl font-bold text-gold-gradient">404</p>
+      <h1 class="mt-4 font-display text-3xl font-bold">Page Not Found</h1>
+      <p class="mt-4 text-muted">The page you're looking for doesn't exist or has moved.</p>
+      <a href="/" class="mt-8 inline-flex items-center gap-2 rounded-full bg-gold-gradient px-7 py-4 font-semibold text-bg transition-transform hover:brightness-110">
+        <Icon name="arrowRight" size={18} /> Back to Home
+      </a>
+    </div>
+  </section>
+</Layout>

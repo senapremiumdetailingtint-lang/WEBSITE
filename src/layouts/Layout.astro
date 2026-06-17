@@ -1,0 +1,130 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import { site, serviceAreas, geo, openingHours } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Optional city name for service-area pages (localizes schema). */
+  cityName?: string;
+  path?: string;
+  /** Keep page out of search results (conversion/utility pages). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  cityName,
+  path = '/',
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path, site.url).href;
+const ogImage = new URL('/og-image.jpg', site.url).href;
+
+// LocalBusiness schema (AutoRepair covers specialty automotive services).
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoRepair',
+  name: cityName ? `${site.name} — ${cityName}` : site.name,
+  image: ogImage,
+  url: canonical,
+  telephone: site.phoneHref,
+  priceRange: site.priceRange,
+  serviceType: [
+    'Mobile Car Detailing',
+    'Window Tint',
+    'Ceramic Coating',
+    'Paint Correction',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.city,
+    addressRegion: site.region,
+    postalCode: site.zip,
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: geo.latitude,
+    longitude: geo.longitude,
+  },
+  openingHours: [...openingHours],
+  areaServed: serviceAreas.map((a) => ({
+    '@type': 'City',
+    name: `${a.name}, ${a.region}`,
+  })),
+  sameAs: [site.instagramUrl],
+  description,
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="me" href={site.instagramUrl} />
+    <link rel="preload" as="image" href="/images/hero.jpg" fetchpriority="high" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Sena Premium Detailing — mobile car detailing and window tint in DFW" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#0a0a0a" />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-bg">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingWhatsApp />
+
+    <script>
+      // Scroll reveal — respects prefers-reduced-motion via CSS.
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && els.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12 }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>
