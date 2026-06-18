@@ -146,8 +146,8 @@ export const beforeAfters = [
   },
   {
     label: 'Mercedes GLC',
-    before: '/images/ba-suv-before.jpg',
-    after: '/images/ba-suv-after.jpg',
+    before: '/images/ba-glc-before.jpg',
+    after: '/images/ba-glc-after.jpg',
     orientation: 'landscape' as const,
   },
   {
