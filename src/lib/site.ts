@@ -128,6 +128,35 @@ export const serviceOptions = [
   'Not sure yet — recommend for me',
 ] as const;
 
+// Real before/after transformations (client photos). orientation drives the
+// slider's aspect ratio so portrait and landscape pairs both look right.
+export const beforeAfters = [
+  {
+    label: 'Mercedes Interior',
+    before: '/images/ba-interior-before.jpg',
+    after: '/images/ba-interior-after.jpg',
+    orientation: 'portrait' as const,
+  },
+  {
+    label: 'Mercedes GLC',
+    before: '/images/ba-suv-before.jpg',
+    after: '/images/ba-suv-after.jpg',
+    orientation: 'landscape' as const,
+  },
+  {
+    label: 'F-150 Front',
+    before: '/images/ba-truck-front-before.jpg',
+    after: '/images/ba-truck-front-after.jpg',
+    orientation: 'portrait' as const,
+  },
+  {
+    label: 'F-150 Rear',
+    before: '/images/ba-truck-rear-before.jpg',
+    after: '/images/ba-truck-rear-after.jpg',
+    orientation: 'portrait' as const,
+  },
+];
+
 // Home FAQ — common questions (also feeds FAQPage schema for Google & LLMs).
 export const homeFaq = [
   {
