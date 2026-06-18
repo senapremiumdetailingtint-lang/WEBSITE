@@ -25,12 +25,48 @@ export const site = {
 export const web3formsKey = '590d7740-9b71-4c12-88c9-6d8659e2fedd';
 
 // Cities served — also generate /[city] SEO pages from this list.
+// `intro` + `neighborhoods` give each city page unique, locally-relevant copy.
 export const serviceAreas = [
-  { slug: 'prosper', name: 'Prosper', region: 'TX' },
-  { slug: 'frisco', name: 'Frisco', region: 'TX' },
-  { slug: 'plano', name: 'Plano', region: 'TX' },
-  { slug: 'mckinney', name: 'McKinney', region: 'TX' },
-  { slug: 'dallas', name: 'Dallas', region: 'TX' },
+  {
+    slug: 'prosper',
+    name: 'Prosper',
+    region: 'TX',
+    intro:
+      "Prosper is our home base, so you'll never wait long for a spotless ride. We bring our full mobile car wash and detailing setup right to your driveway across town.",
+    neighborhoods: ['Windsong Ranch', 'Star Trail', 'Prosper Trail', 'Lakewood'],
+  },
+  {
+    slug: 'frisco',
+    name: 'Frisco',
+    region: 'TX',
+    intro:
+      "From The Star to Stonebriar, Frisco drivers trust Sena for a showroom finish without the shop visit. Our mobile team comes to your home or office anywhere in the city.",
+    neighborhoods: ['Stonebriar', 'Frisco Square', 'Phillips Creek Ranch', 'The Star'],
+  },
+  {
+    slug: 'plano',
+    name: 'Plano',
+    region: 'TX',
+    intro:
+      "Busy Plano professionals love getting their car washed and detailed while they work. We cover everywhere from Legacy West to West Plano and Willow Bend.",
+    neighborhoods: ['Legacy West', 'West Plano', 'Willow Bend', 'Hunters Glen'],
+  },
+  {
+    slug: 'mckinney',
+    name: 'McKinney',
+    region: 'TX',
+    intro:
+      "Whether you're near Historic Downtown McKinney or out in Stonebridge Ranch, our mobile car wash and detailing come to you — no drop-off, no waiting room.",
+    neighborhoods: ['Stonebridge Ranch', 'Craig Ranch', 'Adriatica', 'Historic Downtown'],
+  },
+  {
+    slug: 'dallas',
+    name: 'Dallas',
+    region: 'TX',
+    intro:
+      "Across North Dallas — from Preston Hollow to Uptown and Lakewood — we deliver premium mobile car wash, detailing and window tint right where you live or work.",
+    neighborhoods: ['Preston Hollow', 'Uptown', 'Lakewood', 'North Dallas'],
+  },
 ] as const;
 
 // Approx. geo anchor (Prosper, TX) — used for LocalBusiness schema.
@@ -212,6 +248,48 @@ export interface ServicePage {
 }
 
 export const servicePages: ServicePage[] = [
+  {
+    slug: 'mobile-car-wash',
+    name: 'Mobile Car Wash',
+    title: 'Mobile Car Wash in DFW | We Come to You | Sena Premium',
+    description:
+      'Mobile car wash in Frisco, Plano, McKinney & Dallas. Hand wash, wheels, interior vacuum & windows — at your home or office, from $99. Book in 30 seconds.',
+    eyebrow: 'Mobile Car Wash',
+    h1Lead: 'Mobile Car Wash,',
+    h1Accent: 'At Your Door',
+    intro:
+      "Skip the lines and the drive. Our mobile car wash comes to your home or office anywhere in DFW — hand wash, wheels, tires, interior vacuum and streak-free windows, done while you go about your day.",
+    price: 'from $99',
+    image: '/images/detail-hand.jpg',
+    includes: [
+      'Full exterior hand wash & dry',
+      'Wheels, tires & tire shine',
+      'Interior vacuum',
+      'Dashboard, console & door panels wiped',
+      'Interior & exterior windows',
+      'We bring our own water & power',
+    ],
+    benefits: [
+      { icon: 'car', label: 'We come to you' },
+      { icon: 'droplet', label: 'No hookups needed' },
+      { icon: 'clock', label: 'Done in ~60–90 min' },
+      { icon: 'shield', label: 'Licensed & insured' },
+    ],
+    faq: [
+      {
+        q: 'How much is a mobile car wash?',
+        a: 'Our mobile car wash (the Essential Detail) starts at $99 for sedans, with trucks and SUVs slightly higher. It includes a full hand wash, wheels, interior vacuum and windows — done at your location.',
+      },
+      {
+        q: 'Do you come to my home or office?',
+        a: 'Yes — we are 100% mobile and bring our own water and power. We serve Frisco, Plano, McKinney, Prosper, Dallas and the surrounding DFW area.',
+      },
+      {
+        q: 'How long does a mobile car wash take?',
+        a: 'A standard mobile car wash takes about 60–90 minutes depending on the size and condition of your vehicle. Larger detail packages take longer.',
+      },
+    ],
+  },
   {
     slug: 'ceramic-coating',
     name: 'Ceramic Coating',

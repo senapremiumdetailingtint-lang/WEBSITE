@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site, serviceAreas, geo, openingHours } from '../lib/site';
+import { site, serviceAreas, geo, packages } from '../lib/site';
 
 interface Props {
   title: string;
@@ -25,16 +25,23 @@ const {
 const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og-image.jpg', site.url).href;
 
-// LocalBusiness schema (AutoRepair covers specialty automotive services).
+// LocalBusiness schema — AutoWash + AutoRepair cover "mobile car wash",
+// detailing, tint and ceramic coating.
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'AutoRepair',
+  '@type': ['AutoWash', 'AutoRepair'],
+  '@id': `${site.url}/#business`,
   name: cityName ? `${site.name} — ${cityName}` : site.name,
   image: ogImage,
   url: canonical,
   telephone: site.phoneHref,
+  email: site.email,
   priceRange: site.priceRange,
+  currenciesAccepted: 'USD',
+  keywords:
+    'mobile car wash, mobile car detailing, mobile detailing, car wash near me, window tint, ceramic coating, paint correction, Frisco TX, Plano TX, McKinney TX, Prosper TX, Dallas TX, DFW',
   serviceType: [
+    'Mobile Car Wash',
     'Mobile Car Detailing',
     'Window Tint',
     'Ceramic Coating',
@@ -52,11 +59,26 @@ const schema = {
     latitude: geo.latitude,
     longitude: geo.longitude,
   },
-  openingHours: [...openingHours],
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '08:00',
+    closes: '19:00',
+  },
   areaServed: serviceAreas.map((a) => ({
     '@type': 'City',
     name: `${a.name}, ${a.region}`,
   })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Detailing Packages',
+    itemListElement: packages.map((p) => ({
+      '@type': 'Offer',
+      priceCurrency: 'USD',
+      price: p.price.replace(/[^0-9.]/g, ''),
+      itemOffered: { '@type': 'Service', name: p.name },
+    })),
+  },
   sameAs: [site.instagramUrl],
   description,
 };
@@ -76,6 +98,16 @@ const schema = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="me" href={site.instagramUrl} />
     <link rel="preload" as="image" href="/images/hero.jpg" fetchpriority="high" />
+
+    <!-- Faster web fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Local SEO geo signals -->
+    <meta name="geo.region" content="US-TX" />
+    <meta name="geo.placename" content="Prosper, Frisco, Plano, McKinney, Dallas" />
+    <meta name="geo.position" content={`${geo.latitude};${geo.longitude}`} />
+    <meta name="ICBM" content={`${geo.latitude}, ${geo.longitude}`} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
