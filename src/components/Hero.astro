@@ -49,21 +49,17 @@ import { site, areaLabel } from '../lib/site';
       </p>
 
       <!-- Offer pill -->
-      <div class="mt-7 inline-flex items-center gap-3 rounded-full border border-[var(--color-gold)]/30 bg-surface/70 px-5 py-2.5 backdrop-blur-sm">
+      <div class="mt-7 inline-flex items-center gap-2.5 rounded-full border border-[var(--color-gold)]/30 bg-surface/70 px-5 py-2.5 backdrop-blur-sm">
         <Icon name="sparkles" size={18} class="text-gold" />
-        <span class="text-sm md:text-base">
-          <span class="font-semibold text-ink">Essential Detail</span>
-          <span class="text-muted"> from </span>
-          <span class="font-display text-xl font-bold text-gold-gradient">$99</span>
-        </span>
+        <span class="text-sm font-semibold md:text-base">Free Instant Quote</span>
       </div>
 
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href="/#booking" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform duration-200 hover:brightness-110">
-          <Icon name="calendar" size={20} /> Book Your Detail
+        <a href="#quiz" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform duration-200 hover:brightness-110">
+          <Icon name="sparkles" size={20} /> Find Your Detail
         </a>
-        <a href={`tel:${site.phoneHref}`} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors duration-200 hover:border-gold hover:text-gold">
-          <Icon name="phone" size={20} /> {site.phoneDisplay}
+        <a href="#booking" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors duration-200 hover:border-gold hover:text-gold">
+          <Icon name="calendar" size={20} /> Book Now
         </a>
       </div>
 
