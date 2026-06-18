@@ -200,6 +200,31 @@ export const beforeAfters = [
   },
 ];
 
+// Real Google reviews. Keep wording faithful to what customers wrote.
+export const reviewStats = { rating: '5.0', count: 4 };
+export const reviews = [
+  {
+    name: 'Antonella Sena',
+    rating: 5,
+    text: "I don't usually write reviews, but I had to for Sena Premium Detailing & Tint. They did an amazing job on my car. The interior is spotless, and the exterior has a clean, deep shine that really stands out. The tint came out perfect too — no bubbles, super clean, and it made a big difference right away. You can tell they actually care about their work and pay attention to the small details. If you're in Frisco and need detailing or tint, I'd definitely recommend checking them out.",
+  },
+  {
+    name: 'maju',
+    rating: 5,
+    text: 'My car was delivered looking newer than when I bought it! Flawless!! We had our seats and headlights cleaned, and we are very satisfied and happy! Anthony was very friendly and efficient. We will definitely do this again.',
+  },
+  {
+    name: 'Manju Sivakumar',
+    rating: 5,
+    text: 'Had the car detailing done and had a five-star experience.',
+  },
+  {
+    name: 'Lorena Di Bella',
+    rating: 5,
+    text: 'The best service, 100% recommended.',
+  },
+] as const;
+
 // Home FAQ — common questions (also feeds FAQPage schema for Google & LLMs).
 export const homeFaq = [
   {
