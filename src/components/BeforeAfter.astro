@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { beforeAfters, waDefault } from '../lib/site';
+import { beforeAfters } from '../lib/site';
 
 const first = beforeAfters[0];
 const ar = (o: string) => (o === 'landscape' ? '4 / 3' : '3 / 4');
@@ -60,7 +60,7 @@ const ar = (o: string) => (o === 'landscape' ? '4 / 3' : '3 / 4');
     </div>
 
     <div class="reveal mt-8 text-center">
-      <a href={waDefault} target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
+      <a href="/#booking" class="inline-flex items-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
         <Icon name="sparkles" size={20} /> Get Results Like This
       </a>
     </div>

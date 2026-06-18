@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { site, serviceOptions, waDefault, web3formsKey } from '../lib/site';
+import { site, serviceOptions, web3formsKey } from '../lib/site';
 
 const inputCls =
   'w-full rounded-xl border border-white/10 bg-surface-2 px-4 py-3 text-ink placeholder:text-muted/70 transition-colors focus:border-gold';
@@ -9,29 +9,29 @@ const labelCls = 'mb-1.5 block text-sm font-medium text-ink';
 <section id="booking" class="scroll-mt-24 py-20 md:py-28">
   <div class="mx-auto max-w-7xl px-6 md:px-10">
     <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
-      <!-- Left: pitch + WhatsApp -->
+      <!-- Left: pitch + contact -->
       <div class="reveal">
         <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Book Your Detail</p>
         <h2 class="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight">
           Ready When <span class="text-gold-gradient">You Are</span>
         </h2>
         <p class="mt-4 text-lg leading-relaxed text-muted">
-          Tell us about your vehicle — we'll confirm fast. Prefer to chat? WhatsApp us.
+          Tell us about your vehicle and we'll get back to you fast to confirm your appointment.
         </p>
 
         <div class="mt-8 space-y-4">
-          <a href={waDefault} target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-4 transition-colors hover:border-[#25D366]/50">
-            <span class="grid h-11 w-11 place-items-center rounded-full bg-[#25D366] text-white"><Icon name="whatsapp" size={22} /></span>
-            <span>
-              <span class="block text-sm font-semibold text-ink">Message us on WhatsApp</span>
-              <span class="block text-sm text-muted">Fastest way to book · <span class="text-gold">Atendemos em português</span></span>
-            </span>
-          </a>
           <a href={`tel:${site.phoneHref}`} class="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-4 transition-colors hover:border-[var(--color-gold)]/40">
             <span class="grid h-11 w-11 place-items-center rounded-full bg-gold-gradient text-bg"><Icon name="phone" size={22} /></span>
             <span>
               <span class="block text-sm font-semibold text-ink">Call or text {site.phoneDisplay}</span>
               <span class="block text-sm text-muted">Mon–Sat · 8:00 AM – 7:00 PM</span>
+            </span>
+          </a>
+          <a href={`mailto:${site.email}`} class="flex items-center gap-3 rounded-xl border border-white/10 bg-surface p-4 transition-colors hover:border-[var(--color-gold)]/40">
+            <span class="grid h-11 w-11 place-items-center rounded-full bg-gold-gradient text-bg"><Icon name="mail" size={22} /></span>
+            <span>
+              <span class="block text-sm font-semibold text-ink">Email us</span>
+              <span class="block text-sm text-muted">We reply quickly during business hours</span>
             </span>
           </a>
         </div>

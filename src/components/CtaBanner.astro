@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { site, waDefault } from '../lib/site';
+import { site } from '../lib/site';
 ---
 <section class="relative isolate overflow-hidden">
   <div class="absolute inset-0 -z-10">
@@ -26,8 +26,8 @@ import { site, waDefault } from '../lib/site';
       <a href="/#booking" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
         <Icon name="calendar" size={20} /> Book Your Detail
       </a>
-      <a href={waDefault} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-bg/40 px-7 py-4 text-base font-semibold text-ink backdrop-blur-sm transition-colors hover:border-gold hover:text-gold">
-        <Icon name="whatsapp" size={20} /> WhatsApp Us
+      <a href={`tel:${site.phoneHref}`} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-bg/40 px-7 py-4 text-base font-semibold text-ink backdrop-blur-sm transition-colors hover:border-gold hover:text-gold">
+        <Icon name="phone" size={20} /> {site.phoneDisplay}
       </a>
     </div>
   </div>

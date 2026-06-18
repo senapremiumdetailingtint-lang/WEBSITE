@@ -7,7 +7,7 @@ import Process from '../components/Process.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import Reviews from '../components/Reviews.astro';
 import Booking from '../components/Booking.astro';
-import { serviceAreas, site, waDefault } from '../lib/site';
+import { serviceAreas, site } from '../lib/site';
 
 export const prerender = true;
 
@@ -48,8 +48,8 @@ const cityName = area.name;
           <a href="#booking" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
             <Icon name="calendar" size={20} /> Book in {cityName}
           </a>
-          <a href={waDefault} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors hover:border-gold hover:text-gold">
-            <Icon name="whatsapp" size={20} /> WhatsApp Us
+          <a href={`tel:${site.phoneHref}`} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors hover:border-gold hover:text-gold">
+            <Icon name="phone" size={20} /> {site.phoneDisplay}
           </a>
         </div>
       </div>

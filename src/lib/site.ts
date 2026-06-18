@@ -13,7 +13,6 @@ export const site = {
   url: 'https://senadetailing.com',
   phoneDisplay: '(214) 656-0656',
   phoneHref: '+12146560656',
-  whatsapp: '12146560656', // international, no + or spaces
   instagram: 'senadetailingtint',
   instagramUrl: 'https://instagram.com/senadetailingtint',
   email: 'senapremiumdetailingtint@gmail.com', // where booking requests are sent
@@ -39,15 +38,6 @@ export const geo = { latitude: 33.2365, longitude: -96.8006 } as const;
 export const openingHours = ['Mo-Sa 08:00-19:00'] as const;
 
 export const areaLabel = 'Frisco · Plano · McKinney · Dallas · Prosper';
-
-// Pre-filled WhatsApp message.
-export function waLink(message: string): string {
-  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
-}
-
-export const waDefault = waLink(
-  "Hello Sena Premium! I'd like to book a detail / get a quote for my vehicle."
-);
 
 // --- Detailing packages (official pricing, owner-confirmed) ---
 // Prices are "Starting at" (sedan); trucks & SUVs slightly higher.
@@ -197,8 +187,8 @@ export const homeFaq = [
     a: 'Yes — and it’s one of the things that sets us apart. We can detail your vehicle and install window tint in the same appointment, and you save $50 when you book them together.',
   },
   {
-    q: 'Você fala português?',
-    a: 'Sim! Somos uma empresa de brasileiros e atendemos em português. É só chamar no WhatsApp ou ligar.',
+    q: 'How do I book?',
+    a: 'Fill out the booking form on this page or call/text us at (214) 656-0656. We’ll confirm your appointment and the time we’ll arrive.',
   },
 ];
 
