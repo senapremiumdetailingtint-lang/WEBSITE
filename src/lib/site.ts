@@ -49,50 +49,65 @@ export const waDefault = waLink(
   "Hello Sena Premium! I'd like to book a detail / get a quote for my vehicle."
 );
 
-// --- Detailing packages ---
-// PRICE NOTE: Only "Basic $89" is confirmed by the owner. Premium/Ultimate/Tint
-// prices below are aligned to real DFW market rates (local research) — owner
-// confirms. Prices shown are "from" (sedan); SUV/truck slightly higher.
+// --- Detailing packages (official pricing, owner-confirmed) ---
+// Prices are "Starting at" (sedan); trucks & SUVs slightly higher.
 export const packages = [
   {
     name: 'Essential Detail',
-    price: '$89',
-    confirmed: true,
+    price: '$99',
     image: '/images/detail-hand.jpg',
-    blurb: 'A fast, thorough refresh — inside and out.',
+    blurb: 'Perfect for well-maintained vehicles that need a refresh.',
     features: [
-      'Full exterior hand wash',
-      'Wheels, tires & tire shine',
+      'Hand wash & dry',
+      'Wheels & tires cleaned + tire shine',
       'Interior vacuum',
-      'Windows in & out',
+      'Dashboard, console & door panels wiped',
+      'Cup holders cleaned',
+      'Interior & exterior windows',
+      'Light dust removal',
     ],
     featured: false,
   },
   {
     name: 'Premium Detail',
-    price: '$199',
-    confirmed: false,
+    price: '$150',
     image: '/images/interior.jpg',
-    blurb: 'Deep clean with protection that lasts months.',
+    blurb: 'Ideal for vehicles needing a deeper clean without shampooing.',
     features: [
-      'Everything in Essential',
-      'Interior deep clean & shampoo',
-      'Leather conditioned',
-      'Ceramic sealant — 6 months',
+      'Everything in Essential, plus:',
+      'Deep interior cleaning',
+      'Steam cleaning on high-touch areas',
+      'Leather cleaning & conditioning',
+      'UV protection for interior surfaces',
+      'Door jambs cleaned',
+      'Detailed cracks & crevices',
+    ],
+    featured: false,
+  },
+  {
+    name: 'Premium Plus Detail',
+    price: '$185',
+    image: '/images/paint.jpg',
+    blurb: 'Great for stain removal and added paint protection.',
+    features: [
+      'Everything in Premium, plus:',
+      'Carpet & floor mat shampoo',
+      'Cloth seat shampoo (if applicable)',
+      'Light stain treatment',
+      'Spray ceramic sealant for paint',
+      'Extra attention to high-use areas',
     ],
     featured: true,
   },
   {
-    name: 'Ultimate Protection',
-    price: '$349',
-    confirmed: false,
-    image: '/images/paint.jpg',
-    blurb: 'Showroom finish with ceramic protection.',
+    name: 'Premium Full Detail',
+    price: '$220',
+    image: '/images/hero.jpg',
+    blurb: 'Our most complete detail — deep extraction and paint decontamination.',
     features: [
-      'Everything in Premium',
-      'Paint correction',
-      'Ceramic coating — 12 months',
-      'Engine bay & headlights',
+      'Everything in Premium Plus, plus:',
+      'Full carpet & seat extraction/shampoo',
+      'Clay bar paint decontamination',
     ],
     featured: false,
   },
@@ -120,11 +135,13 @@ export const comboOffer = {
 } as const;
 
 export const serviceOptions = [
-  'Basic Detail — $89',
-  'Premium Detail',
-  'Ultimate Detail',
+  'Essential Detail — $99',
+  'Premium Detail — $150',
+  'Premium Plus Detail — $185',
+  'Premium Full Detail — $220',
   'Window Tint — Carbon',
   'Window Tint — Ceramic',
+  'Ceramic Coating',
   'Not sure yet — recommend for me',
 ] as const;
 
@@ -161,7 +178,7 @@ export const beforeAfters = [
 export const homeFaq = [
   {
     q: 'How much does mobile car detailing cost?',
-    a: 'Our detail packages start at $89 for the Essential Detail. Premium and Ultimate packages, plus add-ons like ceramic coating and window tint, are priced based on your vehicle. You only pay after the service is done.',
+    a: 'Our detail packages start at $99 for the Essential Detail, with Premium ($150), Premium Plus ($185) and Premium Full ($220) tiers, plus add-ons like ceramic coating and window tint. Pricing is per vehicle, and you only pay after the service is done.',
   },
   {
     q: 'Do you really come to me?',
@@ -173,7 +190,7 @@ export const homeFaq = [
   },
   {
     q: 'How long does a detail take?',
-    a: 'An Essential Detail takes about 60–90 minutes. Premium and Ultimate packages, ceramic coating, or paint correction take longer. We give you a time estimate when you book.',
+    a: 'An Essential Detail takes about 60–90 minutes. The Premium, Premium Plus and Premium Full packages, ceramic coating, or paint correction take longer. We give you a time estimate when you book.',
   },
   {
     q: 'Can I get detailing and window tint in one visit?',

@@ -10,11 +10,11 @@ import { packages, comboOffer, servicePages } from '../lib/site';
         Choose Your Level of <span class="text-gold-gradient">Shine</span>
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-muted">
-        Done at your home or office. From $89.
+        Done at your home or office. From $99.
       </p>
     </div>
 
-    <div class="mt-12 grid gap-6 lg:grid-cols-3">
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {packages.map((p) => (
         <div class={`reveal relative flex flex-col overflow-hidden rounded-2xl border transition-colors duration-300 ${p.featured ? 'border-[var(--color-gold)]/60 bg-surface-2' : 'border-white/10 bg-surface hover:border-[var(--color-gold)]/30'}`}>
           <div class="relative">
