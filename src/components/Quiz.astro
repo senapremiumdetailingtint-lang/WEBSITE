@@ -1,49 +1,23 @@
 ---
 import Icon from './Icon.astro';
+import { web3formsKey, site } from '../lib/site';
 
-// Recommendation targets — `option` matches a value in the booking form's
-// service <select>, so picking a result pre-selects it.
+// Recommendation targets. `option` mirrors a booking service label.
 const recs = {
-  essential: {
-    name: 'Essential Detail',
-    price: '$99',
-    desc: 'A fast, thorough refresh inside and out — perfect for a well-kept car.',
-    option: 'Essential Detail — $99',
-  },
-  premium: {
-    name: 'Premium Detail',
-    price: '$150',
-    desc: 'A deep interior clean with steam, leather care and UV protection.',
-    option: 'Premium Detail — $150',
-  },
-  premiumPlus: {
-    name: 'Premium Plus Detail',
-    price: '$185',
-    desc: 'Shampoo, stain treatment and a ceramic sealant for lasting protection.',
-    option: 'Premium Plus Detail — $185',
-  },
-  premiumFull: {
-    name: 'Premium Full Detail',
-    price: '$220',
-    desc: 'Our most complete detail — full extraction and clay bar decontamination.',
-    option: 'Premium Full Detail — $220',
-  },
-  ceramic: {
-    name: 'Ceramic Coating',
-    price: 'from $499',
-    desc: 'Years of paint protection against the Texas sun. Often paired with a detail.',
-    option: 'Ceramic Coating',
-    href: '/services/ceramic-coating',
-  },
+  essential: { name: 'Essential Detail', price: '$99', desc: 'A fast, thorough refresh inside and out — perfect for a well-kept car.', option: 'Essential Detail — $99' },
+  premium: { name: 'Premium Detail', price: '$150', desc: 'A deep interior clean with steam, leather care and UV protection.', option: 'Premium Detail — $150' },
+  premiumPlus: { name: 'Premium Plus Detail', price: '$185', desc: 'Shampoo, stain treatment and a ceramic sealant for lasting protection.', option: 'Premium Plus Detail — $185' },
+  premiumFull: { name: 'Premium Full Detail', price: '$220', desc: 'Our most complete detail — full extraction and clay bar decontamination.', option: 'Premium Full Detail — $220' },
+  ceramic: { name: 'Ceramic Coating', price: 'from $499', option: 'Ceramic Coating', href: '/services/ceramic-coating' },
 };
 
 const questions = [
   {
     q: 'What are you driving?',
     options: [
-      { label: 'Car / Sedan', icon: 'car' },
-      { label: 'SUV or Truck', icon: 'car' },
-      { label: 'Luxury / Exotic', icon: 'sparkles' },
+      { label: 'Car / Sedan', icon: 'car', vehicle: 'Car / Sedan' },
+      { label: 'SUV or Truck', icon: 'car', vehicle: 'SUV or Truck' },
+      { label: 'Luxury / Exotic', icon: 'sparkles', vehicle: 'Luxury / Exotic' },
     ],
   },
   {
@@ -64,6 +38,16 @@ const questions = [
     ],
   },
 ];
+
+// Conversational lead-capture steps. {name} is replaced with the first name.
+const leadSteps = [
+  { key: 'name', type: 'text', msg: "Awesome choice! Let's get you booked — it only takes a moment. First, what should we call you?", placeholder: 'Your name', required: true, autocomplete: 'name' },
+  { key: 'phone', type: 'tel', msg: "Great to meet you, {name}! What's the best number to reach you? (we'll text to confirm your time)", placeholder: '(214) 555-0199', required: true, autocomplete: 'tel' },
+  { key: 'email', type: 'email', msg: "Perfect. Where should we send your confirmation, {name}?", placeholder: 'you@email.com', required: true, autocomplete: 'email' },
+  { key: 'vehicle', type: 'text', msg: "Now the fun part — what are we making shine? Year, make & model.", placeholder: '2022 Tahoe', required: false },
+  { key: 'address', type: 'text', msg: "Best part, {name}: we come to you. What's the service address?", placeholder: '123 Main St, Prosper, TX', required: true, autocomplete: 'street-address' },
+  { key: 'preferred', type: 'text', msg: "Almost done! When works best? A day & time — same-day is often available.", placeholder: 'Sat morning, 06/21', required: false },
+];
 ---
 <section id="quiz" class="scroll-mt-24 border-y border-white/10 bg-surface py-20 md:py-28">
   <div class="mx-auto max-w-3xl px-6 md:px-10">
@@ -73,12 +57,12 @@ const questions = [
         Find Your <span class="text-gold-gradient">Perfect Detail</span>
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-muted">
-        Answer 3 quick questions and we'll recommend the right package — in 30 seconds.
+        Answer a few quick questions and we'll recommend the right package — then book it right here.
       </p>
     </div>
 
     <div id="quizCard" class="reveal mt-10 rounded-2xl border border-white/10 bg-surface-2 p-6 md:p-10">
-      <!-- Progress -->
+      <!-- Progress (quiz phase only) -->
       <div id="quizProgress" class="mb-7 flex items-center justify-between">
         <span class="text-xs font-semibold uppercase tracking-widest text-gold">Step <span id="quizStep">1</span> of 3</span>
         <div class="ml-4 h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
@@ -86,18 +70,16 @@ const questions = [
         </div>
       </div>
 
-      <!-- Steps -->
+      <!-- Phase 1: recommendation questions -->
       {questions.map((q, qi) => (
         <div class="quiz-step" data-step={qi} style={qi === 0 ? '' : 'display:none'}>
           <h3 class="font-display text-xl font-semibold md:text-2xl">{q.q}</h3>
           <div class="mt-6 grid gap-3 sm:grid-cols-2">
             {q.options.map((o) => (
-              <button
-                type="button"
-                class="quiz-opt group flex items-center gap-3 rounded-xl border border-white/12 bg-surface p-4 text-left transition-colors duration-200 hover:border-gold"
+              <button type="button" class="quiz-opt group flex items-center gap-3 rounded-xl border border-white/12 bg-surface p-4 text-left transition-colors duration-200 hover:border-gold"
                 data-score={('score' in o ? o.score : 0)}
                 data-protection={('protection' in o && o.protection) ? '1' : '0'}
-              >
+                data-vehicle={('vehicle' in o ? o.vehicle : '')}>
                 <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-[var(--color-gold)]/30 text-gold transition-colors group-hover:bg-gold-gradient group-hover:text-bg">
                   <Icon name={o.icon} size={20} />
                 </span>
@@ -108,7 +90,7 @@ const questions = [
         </div>
       ))}
 
-      <!-- Result -->
+      <!-- Recommendation result -->
       <div id="quizResult" style="display:none">
         <p class="text-xs font-semibold uppercase tracking-widest text-gold">We recommend</p>
         <h3 id="quizRecName" class="mt-2 font-display text-2xl font-bold md:text-3xl"></h3>
@@ -121,85 +103,203 @@ const questions = [
           <button type="button" id="quizBook" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
             <Icon name="calendar" size={20} /> Book This Detail
           </button>
-          <a id="quizLearn" href="#" class="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors hover:border-gold hover:text-gold">
-            Learn more
-          </a>
-          <button type="button" id="quizRestart" class="inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-medium text-muted transition-colors hover:text-ink">
-            Start over
-          </button>
+          <a id="quizLearn" href="#" class="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-ink transition-colors hover:border-gold hover:text-gold">Learn more</a>
+          <button type="button" id="quizRestart" class="inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-medium text-muted transition-colors hover:text-ink">Start over</button>
         </div>
-        <p class="mt-4 text-xs text-muted">No payment now — pay after your service. Final price depends on vehicle size & condition.</p>
+      </div>
+
+      <!-- Phase 2: conversational lead capture -->
+      <div id="leadPhase" style="display:none">
+        <p id="leadMsg" class="font-display text-xl font-semibold leading-snug md:text-2xl"></p>
+        <div class="mt-6">
+          <input id="leadInput" class="w-full rounded-xl border border-white/12 bg-surface px-4 py-3.5 text-lg text-ink placeholder:text-muted/70 transition-colors focus:border-gold" />
+          <label id="leadConsent" class="mt-1 flex cursor-pointer items-start gap-3 text-sm text-muted" style="display:none">
+            <input type="checkbox" id="leadConsentBox" class="mt-1 h-5 w-5 shrink-0 cursor-pointer accent-[var(--color-gold)]" />
+            <span>I agree to be contacted by Sena Premium Detailing & Tint by phone, text, or email about my request. Message/data rates may apply. See our <a href="/privacy" class="text-gold underline">Privacy Policy</a>.</span>
+          </label>
+          <p id="leadError" class="mt-2 hidden text-sm text-red-400"></p>
+        </div>
+        <div class="mt-6 flex items-center gap-4">
+          <button type="button" id="leadNext" class="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 text-base font-semibold text-bg transition-transform hover:brightness-110">
+            <span id="leadNextLabel">Continue</span> <Icon name="arrowRight" size={18} />
+          </button>
+          <span id="leadCount" class="text-xs text-muted"></span>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div id="quizDone" style="display:none" class="text-center">
+        <span class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gold-gradient text-bg"><Icon name="check" size={34} /></span>
+        <h3 id="doneTitle" class="mt-6 font-display text-2xl font-bold md:text-3xl"></h3>
+        <p id="doneMsg" class="mx-auto mt-3 max-w-md text-muted"></p>
+        <p class="mt-4 text-xs text-muted">No payment now — pay after your service is done.</p>
       </div>
     </div>
   </div>
 </section>
 
-<script define:vars={{ recs }}>
+<script define:vars={{ recs, leadSteps, web3formsKey, phone: site.phoneDisplay }}>
   const steps = Array.from(document.querySelectorAll('.quiz-step'));
   const result = document.getElementById('quizResult');
   const bar = document.getElementById('quizBar');
   const stepNum = document.getElementById('quizStep');
   const progress = document.getElementById('quizProgress');
-  let current = 0;
-  let score = 0;
-  let protection = false;
 
+  let current = 0, score = 0, protection = false, vehicleType = '';
+  let rec = null;
+  const data = {};
+  let leadIdx = 0;
+
+  // ---- Phase 1: recommendation ----
   function show(i) {
     steps.forEach((s, idx) => (s.style.display = idx === i ? '' : 'none'));
-    if (stepNum) stepNum.textContent = String(i + 1);
-    if (bar) bar.style.width = ((i + 1) / steps.length) * 100 + '%';
+    stepNum.textContent = String(i + 1);
+    bar.style.width = ((i + 1) / steps.length) * 100 + '%';
   }
-
-  function finish() {
+  function recommend() {
     let key = 'essential';
     if (protection) key = 'premiumPlus';
     else if (score >= 4) key = 'premiumFull';
     else if (score === 3) key = 'premiumPlus';
     else if (score === 2) key = 'premium';
-    else key = 'essential';
-    const rec = recs[key];
-
+    rec = recs[key];
     document.getElementById('quizRecName').textContent = rec.name;
     document.getElementById('quizRecPrice').textContent = rec.price;
     document.getElementById('quizRecDesc').textContent = rec.desc;
-
     const learn = document.getElementById('quizLearn');
-    const ceramicHint = protection ? recs.ceramic : null;
-    if (ceramicHint) {
-      learn.href = ceramicHint.href;
-      learn.classList.remove('hidden');
-      learn.classList.add('inline-flex');
-      learn.textContent = 'Or explore Ceramic Coating';
-    } else {
-      learn.classList.add('hidden');
-      learn.classList.remove('inline-flex');
-    }
-
+    if (protection) {
+      learn.href = recs.ceramic.href; learn.textContent = 'Or explore Ceramic Coating';
+      learn.classList.remove('hidden'); learn.classList.add('inline-flex');
+    } else { learn.classList.add('hidden'); learn.classList.remove('inline-flex'); }
     steps.forEach((s) => (s.style.display = 'none'));
-    if (progress) progress.style.display = 'none';
+    progress.style.display = 'none';
     result.style.display = 'block';
-
-    document.getElementById('quizBook').onclick = () => {
-      const sel = document.getElementById('service');
-      if (sel) sel.value = rec.option;
-      location.hash = '#booking';
-    };
   }
 
   document.querySelectorAll('.quiz-opt').forEach((btn) => {
     btn.addEventListener('click', () => {
       score += Number(btn.dataset.score || 0);
       if (btn.dataset.protection === '1') protection = true;
+      if (btn.dataset.vehicle) vehicleType = btn.dataset.vehicle;
       current++;
-      if (current >= steps.length) finish();
+      if (current >= steps.length) recommend();
       else show(current);
     });
   });
 
-  document.getElementById('quizRestart')?.addEventListener('click', () => {
-    current = 0; score = 0; protection = false;
-    result.style.display = 'none';
-    if (progress) progress.style.display = 'flex';
-    show(0);
+  document.getElementById('quizRestart').addEventListener('click', () => {
+    current = 0; score = 0; protection = false; vehicleType = '';
+    result.style.display = 'none'; progress.style.display = 'flex'; show(0);
   });
+
+  // ---- Phase 2: conversational lead capture ----
+  const leadPhase = document.getElementById('leadPhase');
+  const leadMsg = document.getElementById('leadMsg');
+  const leadInput = document.getElementById('leadInput');
+  const leadConsent = document.getElementById('leadConsent');
+  const leadConsentBox = document.getElementById('leadConsentBox');
+  const leadError = document.getElementById('leadError');
+  const leadNext = document.getElementById('leadNext');
+  const leadNextLabel = document.getElementById('leadNextLabel');
+  const leadCount = document.getElementById('leadCount');
+
+  const firstName = () => (data.name || '').trim().split(/\s+/)[0] || 'there';
+
+  function renderLead() {
+    const isConsent = leadIdx === leadSteps.length;
+    leadError.classList.add('hidden');
+    if (isConsent) {
+      leadMsg.textContent = `One last thing, ${firstName()} — mind if we reach out to confirm?`;
+      leadInput.style.display = 'none';
+      leadConsent.style.display = 'flex';
+      leadNextLabel.textContent = 'Confirm & Send';
+      leadCount.textContent = '';
+    } else {
+      const s = leadSteps[leadIdx];
+      leadMsg.textContent = s.msg.replace('{name}', firstName());
+      leadInput.style.display = 'block';
+      leadConsent.style.display = 'none';
+      leadInput.type = s.type;
+      leadInput.placeholder = s.placeholder;
+      leadInput.autocomplete = s.autocomplete || 'off';
+      leadInput.required = !!s.required;
+      leadInput.value = data[s.key] || '';
+      leadNextLabel.textContent = 'Continue';
+      leadCount.textContent = `${leadIdx + 1} of ${leadSteps.length + 1}`;
+      setTimeout(() => leadInput.focus(), 50);
+    }
+  }
+
+  function startLead() {
+    result.style.display = 'none';
+    leadPhase.style.display = 'block';
+    leadIdx = 0;
+    renderLead();
+  }
+
+  async function submitLead() {
+    leadNext.disabled = true;
+    leadNextLabel.textContent = 'Sending…';
+    try {
+      const fd = new FormData();
+      fd.append('access_key', web3formsKey);
+      fd.append('subject', `New Booking (Quiz) — ${data.name}`);
+      fd.append('from_name', 'Sena Website Quiz');
+      fd.append('Recommended Package', rec ? rec.option : '');
+      fd.append('Vehicle Type', vehicleType);
+      fd.append('name', data.name || '');
+      fd.append('phone', data.phone || '');
+      fd.append('email', data.email || '');
+      fd.append('vehicle', data.vehicle || '');
+      fd.append('address', data.address || '');
+      fd.append('preferred', data.preferred || '');
+      fd.append('consent', 'Yes');
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+      const json = await res.json().catch(() => ({}));
+      if (!(res.ok && json.success)) throw new Error();
+      leadPhase.style.display = 'none';
+      const done = document.getElementById('quizDone');
+      document.getElementById('doneTitle').textContent = `You're all set, ${firstName()}!`;
+      document.getElementById('doneMsg').textContent =
+        `We've got your request for the ${rec ? rec.name : 'detail'} and we'll reach out shortly to confirm your time. Talk soon!`;
+      done.style.display = 'block';
+    } catch {
+      leadNext.disabled = false;
+      leadNextLabel.textContent = 'Confirm & Send';
+      leadError.textContent = `Something went wrong. Please call or text us at ${phone}.`;
+      leadError.classList.remove('hidden');
+    }
+  }
+
+  function advanceLead() {
+    const isConsent = leadIdx === leadSteps.length;
+    if (isConsent) {
+      if (!leadConsentBox.checked) {
+        leadError.textContent = 'Please check the box so we can contact you.';
+        leadError.classList.remove('hidden');
+        return;
+      }
+      submitLead();
+      return;
+    }
+    const s = leadSteps[leadIdx];
+    const val = leadInput.value.trim();
+    if (s.required && !val) {
+      leadError.textContent = 'This one is required 🙂';
+      leadError.classList.remove('hidden');
+      return;
+    }
+    if (val && !leadInput.checkValidity()) {
+      leadError.textContent = s.type === 'email' ? 'That email looks off — mind double-checking?' : 'Hmm, that doesn’t look right.';
+      leadError.classList.remove('hidden');
+      return;
+    }
+    data[s.key] = val;
+    leadIdx++;
+    renderLead();
+  }
+
+  document.getElementById('quizBook').addEventListener('click', startLead);
+  leadNext.addEventListener('click', advanceLead);
+  leadInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); advanceLead(); } });
 </script>
